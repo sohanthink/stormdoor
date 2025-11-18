@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pora Door - Storm Doors E-Commerce
 
-## Getting Started
+A high-end e-commerce website for selling premium storm doors with beautiful UI, smooth animations, and conversion-focused design.
 
-First, run the development server:
+## 🚀 Getting Started
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## 🎨 Brand Identity
 
-To learn more about Next.js, take a look at the following resources:
+- **Brand:** Pora Door
+- **Tagline:** "Storm Doors, Simplified."
+- **Colors:**
+  - Cream (#F5F1E8) - Background
+  - Beige (#D4C6B5) - Accent
+  - Taupe (#476853) - Secondary
+  - Dark Brown (#8C6442) - Primary
+- **Typography:**
+  - Headings: Playfair Display (Serif)
+  - Body: Source Sans 3 (Sans-serif)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+stormdoor/
+├── app/
+│   ├── layout.tsx          # Root layout
+│   ├── page.tsx            # Landing page
+│   └── globals.css         # Global styles & brand colors
+├── components/
+│   ├── layout/             # Header, Footer
+│   ├── sections/           # Hero, Features, Products, CTA
+│   └── ui/                 # Reusable components (Button, Container)
+├── lib/
+│   └── branding.ts         # Brand configuration
+└── public/                 # Static assets
+```
 
-## Deploy on Vercel
+## ✨ Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- ✅ Fully responsive design
+- ✅ Smooth animations with Framer Motion
+- ✅ Brand-consistent styling
+- ✅ Conversion-optimized landing page
+- ✅ Reusable component system
+- ✅ TypeScript for type safety
+- ✅ SEO optimized
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📋 Current Landing Page Sections
+
+1. **Header** - Sticky navigation with logo placeholder
+2. **Hero** - Large headline with CTAs
+3. **Features** - 4 key selling points
+4. **Products Preview** - Featured products showcase
+5. **CTA** - Conversion-focused call-to-action
+6. **Footer** - Company info and links
+
+## 🔜 Next Steps
+
+See [PROJECT_PLAN.md](./PROJECT_PLAN.md) for detailed development roadmap including:
+- Product pages
+- Shopping cart
+- Checkout process
+- User accounts
+- And more...
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 16
+- **React:** 19.2.0
+- **Styling:** Tailwind CSS v4
+- **Animations:** Framer Motion
+- **TypeScript:** Yes
+- **Fonts:** Next.js Font Optimization
+
+## 📝 Notes
+
+- Logo placeholder ready - add your logo to `/public/` and update Header component
+- Product images are placeholders - ready for real images
+- All brand colors defined as CSS variables for easy theming
+- Components are modular and reusable
+
+## 📄 License
+
+Private project - All rights reserved
