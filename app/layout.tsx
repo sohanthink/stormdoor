@@ -1,25 +1,27 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Source_Sans_3 } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const playfairDisplay = Playfair_Display({
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-serif",
+  display: "swap",
 });
 
-const sourceSans3 = Source_Sans_3({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Pora Door - Storm Doors, Simplified.",
+  title: "Pora Door | Premium Storm Doors with Historic Elegance",
   description:
-    "Discover premium storm doors with historic styles. Pora Door offers high-quality, elegant storm doors that combine beauty and functionality.",
+    "Discover premium storm doors with historic styles. Pora Door offers high-quality, elegant storm doors that combine timeless beauty and modern functionality.",
   keywords:
-    "storm doors, entry doors, historic doors, premium doors, Pora Door",
+    "storm doors, entry doors, historic doors, premium doors, Pora Door, Victorian doors, craftsman doors",
 };
 
 export default function RootLayout({
@@ -30,7 +32,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${playfairDisplay.variable} ${sourceSans3.variable} antialiased`}
+        className={`${cormorantGaramond.variable} ${dmSans.variable} antialiased`}
+        style={{ fontFamily: "var(--font-sans)" }}
       >
         {children}
       </body>
