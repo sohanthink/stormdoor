@@ -3,24 +3,28 @@
 import Link from "next/link";
 import Image from "next/image";
 import classicVictorian from "@/public/home/image1.png";
+import door1 from "@/public/products/door1.png";
 import { useEffect, useRef, useState } from "react";
 
 const products = [
   {
     name: "Classic Victorian",
-    description: "Ornate scrollwork and elegant glass panels that capture the grandeur of Victorian architecture.",
+    description:
+      "Ornate scrollwork and elegant glass panels that capture the grandeur of Victorian architecture.",
     price: "From $899",
     tag: "Best Seller",
   },
   {
     name: "Modern Minimalist",
-    description: "Clean lines and expansive glass for contemporary homes that value simplicity and light.",
+    description:
+      "Clean lines and expansive glass for contemporary homes that value simplicity and light.",
     price: "From $799",
     tag: "New",
   },
   {
     name: "Craftsman Heritage",
-    description: "Authentic Arts & Crafts details with warm wood tones and geometric patterns.",
+    description:
+      "Authentic Arts & Crafts details with warm wood tones and geometric patterns.",
     price: "From $949",
     tag: "Premium",
   },
@@ -54,10 +58,11 @@ export default function Products() {
       className="section-padding bg-[#f5f3ef] relative overflow-hidden"
     >
       {/* Decorative background */}
-      <div className="absolute inset-0 opacity-[0.02]"
+      <div
+        className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, #b8956c 1px, transparent 0)`,
-          backgroundSize: '40px 40px',
+          backgroundSize: "40px 40px",
         }}
       />
 
@@ -105,14 +110,14 @@ export default function Products() {
               style={{ animationDelay: `${300 + index * 100}ms` }}
             >
               {/* Image container */}
-              <div className="relative aspect-[3/4] overflow-hidden bg-gradient-to-b from-[#e8e4dc] to-[#d4cfc5]">
+              <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-[#e8e4dc] to-[#d4cfc5]">
                 <Image
-                  src={classicVictorian}
+                  src={door1}
                   alt={product.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                
+
                 {/* Tag */}
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-primary text-xs font-semibold tracking-wide rounded-full">
@@ -138,7 +143,7 @@ export default function Products() {
                     {product.name}
                   </h3>
                 </div>
-                
+
                 <p className="text-secondary text-sm leading-relaxed mb-4">
                   {product.description}
                 </p>

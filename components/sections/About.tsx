@@ -1,8 +1,10 @@
 "use client";
 
-import aboutbanner from "@/public/home/about.png";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+
+import aboutbanner from "@/public/home/about.png";
+import banner from "@/public/home/door.png";
 
 const stats = [
   { value: "1985", label: "Founded" },
@@ -48,14 +50,14 @@ export default function About() {
               isVisible ? "animate-slide-in-left" : "opacity-0"
             }`}
           >
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
+            <div className="relative aspect-4/5 rounded-3xl overflow-hidden">
               <Image
-                src={aboutbanner}
+                src={banner}
                 alt="About Pora Door - Master Craftsmanship"
                 fill
                 className="object-cover"
               />
-              
+
               {/* Overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
             </div>
@@ -109,9 +111,9 @@ export default function About() {
             >
               <p className="text-lg text-secondary leading-relaxed">
                 At Pora Door, we believe your entryway should make a statement.
-                For over four decades, we&apos;ve combined historic elegance with
-                modern engineering to create storm doors that are as beautiful
-                as they are functional.
+                For over four decades, we&apos;ve combined historic elegance
+                with modern engineering to create storm doors that are as
+                beautiful as they are functional.
               </p>
               <p className="text-secondary leading-relaxed">
                 Our master craftsmen bring generations of expertise to every
