@@ -40,7 +40,7 @@ export default function About() {
       className="section-padding bg-white relative overflow-hidden"
     >
       {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-gold/5 to-transparent" />
+      <div className="absolute top-0 left-0 w-1/2 h-full bg-linear-to-r from-gold/5 to-transparent" />
 
       <div className="container-custom relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">

@@ -19,23 +19,19 @@ export default function Header() {
     { href: "#products", label: "Products" },
     { href: "#features", label: "Features" },
     { href: "#about", label: "About" },
+    { href: "/shop", label: "Shop" },
     { href: "#contact", label: "Contact" },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "glass shadow-lg py-3"
-          : "bg-transparent py-5"
+        scrolled ? "glass shadow-lg py-3" : "bg-transparent py-5"
       }`}
     >
       <nav className="container-custom flex items-center justify-between">
         {/* Logo */}
-        <Link
-          href="/"
-          className="group flex items-center gap-2"
-        >
+        <Link href="/" className="group flex items-center gap-2">
           <span
             className="text-2xl md:text-3xl font-bold tracking-tight text-primary"
             style={{ fontFamily: "var(--font-serif)" }}
@@ -63,10 +59,7 @@ export default function Header() {
 
         {/* Desktop CTA Button */}
         <div className="hidden md:block">
-          <Link
-            href="#products"
-            className="btn-primary text-sm"
-          >
+          <Link href="#products" className="btn-primary text-sm">
             Explore Collection
           </Link>
         </div>
