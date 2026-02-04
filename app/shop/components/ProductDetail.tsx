@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Product } from "./ProductCard";
 import { getHandleOptionsForProduct, HandleOption } from "../data/handles";
 import {
@@ -11,6 +12,7 @@ import {
   INSTALLATION_PRICE,
 } from "../utils/pricing";
 import { getColorInfo } from "../utils/colors";
+import { useCart } from "@/contexts/CartContext";
 import door1 from "@/public/products/door1.png";
 
 interface ProductDetailProps {
@@ -18,6 +20,8 @@ interface ProductDetailProps {
 }
 
 export default function ProductDetail({ product }: ProductDetailProps) {
+  const router = useRouter();
+  const { addToCart } = useCart();
   const [selectedColor, setSelectedColor] = useState<string>(
     product.colors?.[0] || ""
   );
@@ -28,6 +32,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [canAddToCart, setCanAddToCart] = useState(false);
   const [showMeasurementGuide, setShowMeasurementGuide] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
 
   // Get handle options if handle is required
   const handleOptions = product.handleRequired
@@ -70,16 +75,26 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   const handleAddToCart = () => {
     if (!canAddToCart) return;
 
-    // TODO: Implement cart logic
-    console.log("Add to cart", {
+    addToCart({
       productId: product.id,
+      name: product.name,
+      brand: product.brand,
+      price: doorPrice + handlePrice,
+      image: product.image,
       color: selectedColor,
-      handle: selectedHandle,
-      swing: selectedSwing,
-      zipCode,
+      swingType: selectedSwing || undefined,
+      handleId: selectedHandle || undefined,
+      handleName: selectedHandleData?.name,
+      handlePrice: handlePrice || undefined,
+      handleIncluded: product.handleIncluded,
       installation: installationSelected,
-      priceBreakdown,
+      zipCode: zipCode || undefined,
     });
+
+    setAddedToCart(true);
+    setTimeout(() => {
+      router.push("/cart");
+    }, 500);
   };
 
   // Product images (placeholder - you'd replace with actual images)
@@ -537,14 +552,18 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             {/* Add to Cart Button */}
             <button
               onClick={handleAddToCart}
-              disabled={!canAddToCart}
+              disabled={!canAddToCart || addedToCart}
               className={`w-full py-4 rounded-2xl font-semibold text-lg transition-all ${
-                canAddToCart
+                canAddToCart && !addedToCart
                   ? "bg-gold text-white hover:bg-green hover:shadow-xl transform hover:-translate-y-1"
+                  : addedToCart
+                  ? "bg-green text-white"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }`}
             >
-              {!canAddToCart
+              {addedToCart
+                ? "Added! Redirecting to cart..."
+                : !canAddToCart
                 ? "Please complete required selections"
                 : "Add to Cart"}
             </button>
