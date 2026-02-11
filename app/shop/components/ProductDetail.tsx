@@ -13,6 +13,7 @@ import {
 } from "../utils/pricing";
 import { getColorInfo } from "../utils/colors";
 import { useCart } from "@/contexts/CartContext";
+import { getProductImage } from "../utils/imageManager";
 import door1 from "@/public/products/door1.png";
 
 interface ProductDetailProps {
@@ -33,6 +34,8 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   const [canAddToCart, setCanAddToCart] = useState(false);
   const [showMeasurementGuide, setShowMeasurementGuide] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [currentImage, setCurrentImage] = useState<string>("");
+  const [imageError, setImageError] = useState(false);
 
   // Get handle options if handle is required
   const handleOptions = product.handleRequired
@@ -97,8 +100,20 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     }, 500);
   };
 
-  // Product images (placeholder - you'd replace with actual images)
-  const productImages = [door1, door1, door1]; // Replace with actual product images
+  // Update image when color or handle changes
+  useEffect(() => {
+    const imagePath = getProductImage(
+      product.id,
+      selectedColor || undefined,
+      selectedHandle || undefined,
+      selectedHandleData?.name
+    );
+    setCurrentImage(imagePath);
+    setImageError(false);
+  }, [product.id, selectedColor, selectedHandle, selectedHandleData?.name]);
+
+  // Product images for thumbnail gallery (can include multiple angles/views)
+  const productImages = [currentImage || `/products/${product.id}.png`];
 
   return (
     <div className="min-h-screen bg-[#faf8f5] mt-18">
@@ -125,13 +140,32 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           <div className="space-y-4">
             {/* Main Image */}
             <div className="relative aspect-square bg-linear-to-b from-[#e8e4dc] to-[#d4cfc5] rounded-3xl overflow-hidden group">
-              <Image
-                src={productImages[activeImageIndex]}
-                alt={product.name}
-                fill
-                className="object-cover"
-                priority
-              />
+              {currentImage && !imageError ? (
+                <Image
+                  src={currentImage}
+                  alt={`${product.name} - ${selectedColor || "Default"}${selectedHandleData ? ` with ${selectedHandleData.name}` : ""}`}
+                  fill
+                  className="object-cover transition-opacity duration-300"
+                  priority
+                  onError={() => {
+                    setImageError(true);
+                    // Try fallback to base product image
+                    const fallback = `/products/${product.id}.png`;
+                    if (currentImage !== fallback) {
+                      setCurrentImage(fallback);
+                      setImageError(false);
+                    }
+                  }}
+                />
+              ) : (
+                <Image
+                  src={door1}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              )}
               <div className="absolute top-4 left-4">
                 <span
                   className={`px-4 py-2 backdrop-blur-sm text-sm font-bold tracking-wide rounded-full ${

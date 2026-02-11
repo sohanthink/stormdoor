@@ -217,7 +217,7 @@ export const products: Product[] = [
     closer: "Standard exposed",
     handleIncluded: true,
     handleRequired: false,
-    colors: ["White", "Brown", "Grey"],
+    colors: ["White", "Brown", "Almond"],
     swingType: "universal",
     retailPrice: 309,
     poraDoorPrice: 433,
