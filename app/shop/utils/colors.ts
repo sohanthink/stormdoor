@@ -51,6 +51,21 @@ export const doorColors: Record<string, ColorInfo> = {
     hex: "#8C7853",
     displayName: "Aged Bronze",
   },
+  Graphite: {
+    name: "Graphite",
+    hex: "#383838",
+    displayName: "Graphite",
+  },
+  Pebblestone: {
+    name: "Pebblestone",
+    hex: "#9A8B7A",
+    displayName: "Pebblestone",
+  },
+  Woodland: {
+    name: "Woodland",
+    hex: "#5C5347",
+    displayName: "Woodland",
+  },
 };
 
 export function getColorInfo(colorName: string): ColorInfo {

@@ -100,17 +100,18 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     }, 500);
   };
 
-  // Update image when color or handle changes
+  // Update image when color, handle, or swing changes
   useEffect(() => {
     const imagePath = getProductImage(
       product.id,
       selectedColor || undefined,
       selectedHandle || undefined,
-      selectedHandleData?.name
+      selectedHandleData?.name,
+      selectedSwing || undefined
     );
     setCurrentImage(imagePath);
     setImageError(false);
-  }, [product.id, selectedColor, selectedHandle, selectedHandleData?.name]);
+  }, [product.id, selectedColor, selectedHandle, selectedHandleData?.name, selectedSwing]);
 
   // Product images for thumbnail gallery (can include multiple angles/views)
   const productImages = [currentImage || `/products/${product.id}.png`];

@@ -83,59 +83,104 @@ function normalizeProductIdForImage(productId: string): string {
 }
 
 /**
- * Gets the product image path based on product ID, color, and handle
- * Tries to find the most specific image first, then falls back to less specific ones
- * Supports multiple formats: .avif, .png, .jpg, .webp
- * 
- * Priority order:
- * 1. {productId}-{color}-{handle}.{ext} (most specific)
- * 2. {productId}-{color}.{ext} (color only)
- * 3. {productId}.{ext} (base/default)
- * 4. door1.png (fallback)
+ * Products that use a dedicated subfolder for images (e.g. /products/larson-split-view/).
+ * Image naming inside the folder follows product-specific rules (e.g. color + swing, no handle).
+ */
+const PRODUCT_IMAGE_SUBFOLDERS: Record<
+    string,
+    { folder: string; colorToSlug: Record<string, string>; swingSuffix?: (colorSlug: string, swing: string) => string }
+> = {
+    "larson-30-midview": {
+        folder: "larson-30-midview",
+        colorToSlug: {
+            White: "white",
+            Brown: "brown",
+            Almond: "almond",
+        },
+    },
+    "larson-split-view": {
+        folder: "larson-split-view",
+        // Display name -> exact filename slug (your naming)
+        colorToSlug: {
+            "White Linen": "white-lilen",
+            Graphite: "graphait",
+            Pebblestone: "pebbleston",
+            Woodland: "woodland",
+            Black: "black",
+        },
+        // Swing suffix for filename: color base + left/right (black uses -left-handle / -right-handle-outside)
+        swingSuffix: (colorSlug: string, swing: string) => {
+            if (colorSlug === "black") {
+                return swing === "left" ? "left-handle" : "right-handle-outside";
+            }
+            return swing; // -left or -right
+        },
+    },
+};
+
+/**
+ * Gets the product image path based on product ID, color, handle, and optional swing.
+ * Supports per-product subfolders and swing-based images (e.g. larson-split-view).
+ *
+ * Priority for subfolder products (e.g. larson-split-view):
+ * 1. /products/{folder}/{colorSlug}-{swingSuffix}.avif when swing selected
+ * 2. /products/{folder}/{colorSlug}.avif (color only)
+ * 3. /products/door1.png (fallback)
+ *
+ * Priority for flat products:
+ * 1. {productId}-{color}-{handle}.{ext}
+ * 2. {productId}-{color}.{ext}
+ * 3. {productId}.{ext}
+ * 4. door1.png
  */
 export function getProductImage(
     productId: string,
     color?: string,
     handleId?: string,
-    handleName?: string
+    handleName?: string,
+    swing?: string
 ): string {
-    // Supported image formats (in order of preference)
     const formats = [".avif", ".png", ".jpg", ".jpeg", ".webp"];
+    const subfolder = PRODUCT_IMAGE_SUBFOLDERS[productId];
 
-    // Normalize product ID for image matching
+    // Per-product subfolder (e.g. larson-split-view): color + optional swing, no handle
+    if (subfolder) {
+        const baseUrl = `/products/${subfolder.folder}`;
+        const colorSlug = color
+            ? subfolder.colorToSlug[color] ?? toSlug(color)
+            : null;
+
+        if (colorSlug) {
+            if (swing && subfolder.swingSuffix) {
+                const suffix = subfolder.swingSuffix(colorSlug, swing);
+                return `${baseUrl}/${colorSlug}-${suffix}.avif`;
+            }
+            return `${baseUrl}/${colorSlug}.avif`;
+        }
+        return `/products/door1.png`;
+    }
+
     const normalizedProductId = normalizeProductIdForImage(productId);
 
-    // Try to find the most specific image first
     if (color && handleName) {
         const colorSlug = toSlug(color);
         const handleSlug = toSlug(handleName);
-
-        // Try each format
         for (const ext of formats) {
-            const specificPath = `/products/${normalizedProductId}-${colorSlug}-${handleSlug}${ext}`;
-            // Return first format - Next.js Image will handle 404s
-            return specificPath;
+            return `/products/${normalizedProductId}-${colorSlug}-${handleSlug}${ext}`;
         }
     }
 
-    // Try color-only image
     if (color) {
         const colorSlug = toSlug(color);
-
-        // Try each format
         for (const ext of formats) {
-            const colorPath = `/products/${normalizedProductId}-${colorSlug}${ext}`;
-            return colorPath;
+            return `/products/${normalizedProductId}-${colorSlug}${ext}`;
         }
     }
 
-    // Fall back to base product image
     for (const ext of formats) {
-        const basePath = `/products/${normalizedProductId}${ext}`;
-        return basePath;
+        return `/products/${normalizedProductId}${ext}`;
     }
 
-    // Ultimate fallback
     return `/products/door1.png`;
 }
 

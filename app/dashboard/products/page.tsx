@@ -13,6 +13,7 @@ export default function ProductsPage() {
 
   const categories = [
     { id: "all", label: "All Products" },
+    { id: "split-view", label: "Split-View" },
     { id: "full-view-retractable", label: "Full-View Retractable" },
     { id: "mid-view", label: "Mid-View" },
     { id: "three-quarter-view", label: "3/4 View" },

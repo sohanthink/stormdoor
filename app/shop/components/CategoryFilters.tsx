@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export type Category =
   | "all"
+  | "split-view"
   | "full-view"
   | "full-view-retractable"
   | "full-view-interchangeable"
@@ -16,6 +17,11 @@ export const categories = [
     id: "all" as Category,
     name: "All Doors",
     description: "View all products",
+  },
+  {
+    id: "split-view" as Category,
+    name: "Split-View Storm Doors",
+    description: "Split design with swing direction options",
   },
   {
     id: "full-view" as Category,

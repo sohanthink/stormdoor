@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getProductImage } from "../utils/imageManager";
 import door1 from "@/public/products/door1.png";
 
 export interface Product {
@@ -40,6 +42,13 @@ export default function ProductCard({
   index = 0,
   isVisible = true,
 }: ProductCardProps) {
+  // Use product's own image path (base or first color); fall back to door1 if load fails
+  const defaultImagePath =
+    product.image ??
+    getProductImage(product.id, product.colors?.[0]);
+  const [imageError, setImageError] = useState(false);
+  const imageSrc = imageError ? door1 : defaultImagePath;
+
   return (
     <div
       className={`group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 ${
@@ -50,10 +59,11 @@ export default function ProductCard({
       {/* Image container */}
       <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-[#e8e4dc] to-[#d4cfc5]">
         <Image
-          src={product.image || door1}
+          src={imageSrc}
           alt={product.name}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
+          onError={() => setImageError(true)}
         />
 
         {/* Brand badge */}

@@ -2,6 +2,33 @@ import { Product } from "../components/ProductCard";
 
 export const products: Product[] = [
   // Full-View with Retractable Screens
+  // Split View (per-product image folder, swing-based images, no handle selection)
+  {
+    id: "larson-split-view",
+    name: "Larson Split View",
+    brand: "Larson",
+    category: "split-view",
+    description:
+      "Split-view storm door with retractable screen. Choose your color and swing direction. Hinge on left or right when viewing from outside.",
+    price: "$599",
+    priceRange: { min: 599, max: 599 },
+    tag: "Popular",
+    features: ["Split View", "Retractable Screen", "Swing Options"],
+    type: "Split View",
+    venting: "Retractable screen",
+    closer: "Standard",
+    handleIncluded: true,
+    handleRequired: false,
+    colors: ["White Linen", "Graphite", "Pebblestone", "Woodland", "Black"],
+    swingType: "lrh",
+    retailPrice: 429,
+    poraDoorPrice: 599,
+    keyFeatures: [
+      "Split-view design",
+      "Left- or right-hand outswing",
+      "Multiple color options",
+    ],
+  },
   {
     id: "larson-platinum-split-fullview",
     name: "Larson Platinum Split Fullview",

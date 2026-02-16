@@ -4,13 +4,15 @@
 
 ### 1. Image Management Utility (`/app/shop/utils/imageManager.ts`)
 - `getProductImage()` function that automatically determines the correct image path
-- Handles color and handle combinations
+- Handles color, handle, and **swing** (for products like Larson Split View)
+- **Per-product subfolders:** e.g. `/products/larson-split-view/` with product-specific naming (color + swing, no handle)
 - Automatic fallback system (most specific → least specific)
-- Slug conversion for URL-friendly filenames
+- Slug conversion and optional display-name → file-slug mapping for custom names
 
 ### 2. Updated ProductDetail Component
 - Dynamic image switching based on color selection
-- Dynamic image switching based on handle selection
+- Dynamic image switching based on handle selection (when handle required)
+- **Dynamic image switching based on swing direction** (Left-Hand Outswing / Right-Hand Outswing)
 - Automatic image updates when selections change
 - Error handling with fallback images
 - Smooth transitions between images
@@ -48,28 +50,37 @@
 
 ## 🗂️ Image Organization Strategy
 
-### Recommended Folder Structure:
+### Recommended Folder Structure
+
+**Flat (single folder):**
 ```
 /public/products/
 ├── door1.png (fallback/default)
-│
-├── Base Product Images
-│   ├── larson-platinum-split-fullview.png
-│   ├── andersen-2000-series-retractable.png
-│   └── ...
-│
-├── Color Variants
-│   ├── larson-platinum-split-fullview-white-linen.png
-│   ├── larson-platinum-split-fullview-black.png
-│   ├── larson-platinum-split-fullview-grey.png
-│   └── ...
-│
-└── Color + Handle Combinations
-    ├── larson-platinum-split-fullview-white-linen-classic-handle.png
-    ├── larson-platinum-split-fullview-white-linen-modern-handle.png
-    ├── larson-platinum-split-fullview-black-classic-handle.png
-    └── ...
+├── larson-platinum-split-fullview.png
+├── larson-platinum-split-fullview-white-linen.png
+└── ...
 ```
+
+**Per-product subfolder (for many images):**
+```
+/public/products/
+├── door1.png
+├── larson-split-view/
+│   ├── white-lilen.avif
+│   ├── white-lilen-left.avif
+│   ├── white-lilen-right.avif
+│   ├── graphait.avif
+│   ├── graphait-left.avif
+│   ├── graphait-right.avif
+│   ├── pebbleston.avif
+│   ├── woodland.avif
+│   ├── black.avif
+│   ├── black-left-handle.avif
+│   └── black-right-handle-outside.avif
+└── ...
+```
+
+Products that use subfolders are configured in `PRODUCT_IMAGE_SUBFOLDERS` in `imageManager.ts` (e.g. `larson-split-view` with color + swing only, no handle).
 
 ---
 

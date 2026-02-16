@@ -4,10 +4,37 @@ This guide explains how to name and organize product images for dynamic image sw
 
 ## Folder Structure
 
-All product images should be placed in:
+### Option A: Flat (single folder)
+All product images in one folder:
 ```
 /public/products/
+├── door1.png
+├── larson-platinum-split-fullview.png
+├── larson-platinum-split-fullview-white-linen.png
+└── ...
 ```
+
+### Option B: Per-product subfolder (recommended for many images)
+One folder per product for easier organization:
+```
+/public/products/
+├── door1.png
+├── larson-split-view/
+│   ├── white-lilen.avif
+│   ├── white-lilen-left.avif
+│   ├── white-lilen-right.avif
+│   ├── graphait.avif
+│   ├── graphait-left.avif
+│   ├── graphait-right.avif
+│   ├── pebbleston.avif
+│   ├── woodland.avif
+│   ├── black.avif
+│   ├── black-left-handle.avif
+│   └── black-right-handle-outside.avif
+└── larson-platinum-split-fullview.png
+```
+
+When using a subfolder, image paths are `/products/{folder}/{filename}.avif`. Naming inside the folder can be product-specific (e.g. color + swing only, no handle). See `imageManager.ts` and `PRODUCT_IMAGE_SUBFOLDERS` for which products use subfolders.
 
 ## Naming Convention
 
@@ -84,6 +111,26 @@ The system tries to load images in this order (most specific first):
 ├── andersen-2000-series-retractable-white.png
 └── andersen-2000-series-retractable-grey.png
 ```
+
+---
+
+## Per-product subfolder: color + swing (no handle)
+
+For products like **Larson Split View** that don’t use handle selection but do use swing:
+
+**Folder:** `public/products/larson-split-view/`
+
+**Naming:**
+- **Color only:** `{color-slug}.avif` (e.g. `white-lilen.avif`, `graphait.avif`)
+- **Color + left swing:** `{color-slug}-left.avif` (e.g. `white-lilen-left.avif`)
+- **Color + right swing:** `{color-slug}-right.avif` (e.g. `white-lilen-right.avif`)
+
+**Display name → file slug** (your naming in code):
+- White Linen → `white-lilen`
+- Graphite → `graphait`
+- Pebblestone → `pebbleston`
+- Woodland → `woodland`
+- Black → `black` (left: `black-left-handle.avif`, right: `black-right-handle-outside.avif`)
 
 ---
 
