@@ -66,6 +66,21 @@ export const doorColors: Record<string, ColorInfo> = {
     hex: "#5C5347",
     displayName: "Woodland",
   },
+  Sandstone: {
+    name: "Sandstone",
+    hex: "#C4A77D",
+    displayName: "Sandstone",
+  },
+  Terratone: {
+    name: "Terratone",
+    hex: "#6B5B4E",
+    displayName: "Terratone",
+  },
+  "Forest Green": {
+    name: "Forest Green",
+    hex: "#2D5016",
+    displayName: "Forest Green",
+  },
 };
 
 export function getColorInfo(colorName: string): ColorInfo {

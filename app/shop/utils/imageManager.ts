@@ -88,8 +88,62 @@ function normalizeProductIdForImage(productId: string): string {
  */
 const PRODUCT_IMAGE_SUBFOLDERS: Record<
     string,
-    { folder: string; colorToSlug: Record<string, string>; swingSuffix?: (colorSlug: string, swing: string) => string }
+    { folder: string; colorToSlug: Record<string, string>; swingSuffix?: (colorSlug: string, swing: string) => string; ext?: string }
 > = {
+    "andersen-400-series-retractable": {
+        folder: "andersen-400-series-3:4",
+        ext: ".png",
+        colorToSlug: {
+            White: "white",
+            Black: "black",
+            Almond: "almond",
+            Bronze: "bronze",
+            Grey: "gray",
+            Sandstone: "sandtone",
+            "Forest Green": "forest-green",
+        },
+    },
+    "andersen-3000-series-interchangeable": {
+        folder: "andersen-3000-series",
+        ext: ".png",
+        colorToSlug: {
+            White: "white",
+            Black: "black",
+            Almond: "almond",
+            Bronze: "bronze",
+            Grey: "gray",
+            Sandstone: "sandtone",
+            Terratone: "terratone",
+        },
+        swingSuffix: (_colorSlug: string, swing: string) =>
+            swing === "right" ? "right" : "",
+    },
+    "andersen-2000-series-retractable": {
+        folder: "anderson-2000-series",
+        colorToSlug: {
+            White: "white",
+            Almond: "almond",
+            Sandstone: "sandtone",
+        },
+    },
+    "larson-20-midview": {
+        folder: "larson-20-midview",
+        colorToSlug: {
+            White: "white",
+            Brown: "brown",
+        },
+    },
+    "larson-60mt-maximum-view": {
+        folder: "larson-60mt",
+        colorToSlug: {
+            White: "white",
+            Black: "black",
+            Almond: "almond",
+            Brown: "brown",
+            Graphite: "graphait",
+            Sandstone: "sandstone",
+        },
+    },
     "larson-30-midview": {
         folder: "larson-30-midview",
         colorToSlug: {
@@ -97,6 +151,31 @@ const PRODUCT_IMAGE_SUBFOLDERS: Record<
             Brown: "brown",
             Almond: "almond",
         },
+    },
+    "larson-platinum-fullview": {
+        folder: "larson-platinum-fullview",
+        colorToSlug: {
+            "White Linen": "white-lilen",
+            Black: "black",
+            Graphite: "graphait",
+            Pebblestone: "pebbleston",
+            Woodland: "woodland",
+        },
+        swingSuffix: (_colorSlug: string, swing: string) =>
+            swing === "right" ? "right" : "",
+    },
+    "larson-platinum-split-fullview": {
+        folder: "larson-platinum-split-fullview",
+        colorToSlug: {
+            "White Linen": "white-lilen",
+            Black: "black",
+            Graphite: "graphait",
+            Pebblestone: "pebbleston",
+            Woodland: "woodland",
+        },
+        // Base image for left swing; -right for right-hand outswing
+        swingSuffix: (_colorSlug: string, swing: string) =>
+            swing === "right" ? "right" : "",
     },
     "larson-split-view": {
         folder: "larson-split-view",
@@ -151,11 +230,14 @@ export function getProductImage(
             : null;
 
         if (colorSlug) {
+            const ext = subfolder.ext ?? ".avif";
             if (swing && subfolder.swingSuffix) {
                 const suffix = subfolder.swingSuffix(colorSlug, swing);
-                return `${baseUrl}/${colorSlug}-${suffix}.avif`;
+                if (suffix) {
+                    return `${baseUrl}/${colorSlug}-${suffix}${ext}`;
+                }
             }
-            return `${baseUrl}/${colorSlug}.avif`;
+            return `${baseUrl}/${colorSlug}${ext}`;
         }
         return `/products/door1.png`;
     }
