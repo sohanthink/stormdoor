@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,7 @@ import {
 } from "../utils/pricing";
 import { getColorInfo } from "../utils/colors";
 import { useCart } from "@/contexts/CartContext";
-import { getProductImage } from "../utils/imageManager";
+import { getProductImage, getHandleImagePath } from "../utils/imageManager";
 import door1 from "@/public/products/door1.png";
 
 interface ProductDetailProps {
@@ -36,6 +36,19 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   const [addedToCart, setAddedToCart] = useState(false);
   const [currentImage, setCurrentImage] = useState<string>("");
   const [imageError, setImageError] = useState(false);
+  const [handleDropdownOpen, setHandleDropdownOpen] = useState(false);
+  const handleDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close handle dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (handleDropdownRef.current && !handleDropdownRef.current.contains(event.target as Node)) {
+        setHandleDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Get handle options if handle is required
   const handleOptions = product.handleRequired
@@ -388,27 +401,87 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 <p className="text-sm text-secondary mb-4">
                   Handle required for this product. Select style and finish.
                 </p>
-                <select
-                  value={selectedHandle}
-                  onChange={(e) => setSelectedHandle(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-divider focus:border-gold focus:outline-none transition-colors bg-white"
-                  required
-                >
-                  <option value="">Choose a handle...</option>
-                  {handleOptions.map((handle) => (
-                    <option key={handle.id} value={handle.id}>
-                      {handle.name} - ${handle.price}
-                    </option>
-                  ))}
-                </select>
-                {selectedHandleData && (
-                  <div className="mt-3 p-3 bg-gold-light/10 rounded-lg">
-                    <p className="text-sm text-primary">
-                      <strong>Selected:</strong> {selectedHandleData.name} - $
-                      {selectedHandleData.price}
-                    </p>
-                  </div>
-                )}
+                <div ref={handleDropdownRef} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setHandleDropdownOpen(!handleDropdownOpen)}
+                    className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl border-2 text-left transition-colors bg-white ${
+                      selectedHandle ? "border-gold bg-gold-light/5" : "border-divider hover:border-gold-light"
+                    }`}
+                  >
+                    {selectedHandleData ? (
+                      <>
+                        {getHandleImagePath(product.id, selectedHandleData.name) && (
+                          <div className="relative w-12 h-12 shrink-0 rounded-lg overflow-hidden bg-surface border border-divider">
+                            <Image
+                              src={getHandleImagePath(product.id, selectedHandleData.name)!}
+                              alt={selectedHandleData.name}
+                              fill
+                              className="object-contain p-1.5"
+                            />
+                          </div>
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-primary truncate">
+                            {selectedHandleData.name} - ${selectedHandleData.price}
+                          </p>
+                        </div>
+                      </>
+                    ) : (
+                      <span className="text-secondary">Choose a handle...</span>
+                    )}
+                    <svg
+                      className={`w-5 h-5 shrink-0 text-secondary transition-transform ${handleDropdownOpen ? "rotate-180" : ""}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {handleDropdownOpen && (
+                    <div className="absolute top-full left-0 right-0 mt-2 z-50 bg-white rounded-xl border-2 border-divider shadow-lg overflow-hidden max-h-72 overflow-y-auto">
+                      {handleOptions.map((handle) => {
+                        const imgPath = getHandleImagePath(product.id, handle.name);
+                        return (
+                          <button
+                            key={handle.id}
+                            type="button"
+                            onClick={() => {
+                              setSelectedHandle(handle.id);
+                              setHandleDropdownOpen(false);
+                            }}
+                            className={`w-full flex items-center gap-4 px-4 py-3 text-left hover:bg-gold-light/10 transition-colors border-b border-divider last:border-0 ${
+                              selectedHandle === handle.id ? "bg-gold-light/15" : ""
+                            }`}
+                          >
+                            {imgPath && (
+                              <div className="relative w-14 h-14 shrink-0 rounded-lg overflow-hidden bg-surface border border-divider">
+                                <Image
+                                  src={imgPath}
+                                  alt={handle.name}
+                                  fill
+                                  className="object-contain p-2"
+                                />
+                              </div>
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-primary">{handle.name}</p>
+                              <p className="text-sm text-gold">${handle.price}</p>
+                            </div>
+                            {selectedHandle === handle.id && (
+                              <div className="w-5 h-5 rounded-full bg-gold flex items-center justify-center shrink-0">
+                                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 

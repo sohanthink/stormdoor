@@ -76,6 +76,11 @@ export const doorColors: Record<string, ColorInfo> = {
     hex: "#6B5B4E",
     displayName: "Terratone",
   },
+  "Cinnamon Toast": {
+    name: "Cinnamon Toast",
+    hex: "#8B6914",
+    displayName: "Cinnamon Toast",
+  },
   "Forest Green": {
     name: "Forest Green",
     hex: "#2D5016",

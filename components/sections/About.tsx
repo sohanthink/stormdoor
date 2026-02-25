@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import aboutbanner from "@/public/home/about.png";
-import banner from "@/public/home/door.png";
+import banner from "@/public/home/door2.png";
 
 const stats = [
   { value: "1985", label: "Founded" },
@@ -23,7 +23,7 @@ export default function About() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {

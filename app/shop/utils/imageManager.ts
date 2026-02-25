@@ -88,8 +88,42 @@ function normalizeProductIdForImage(productId: string): string {
  */
 const PRODUCT_IMAGE_SUBFOLDERS: Record<
     string,
-    { folder: string; colorToSlug: Record<string, string>; swingSuffix?: (colorSlug: string, swing: string) => string; ext?: string }
+    {
+        folder: string;
+        colorToSlug: Record<string, string>;
+        swingSuffix?: (colorSlug: string, swing: string) => string;
+        ext?: string;
+        handleToSlug?: Record<string, string>;
+    }
 > = {
+    "andersen-4000-interchangeable": {
+        folder: "andersen-4000-interchangeable",
+        ext: ".png",
+        colorToSlug: {
+            White: "white",
+            Black: "black",
+            Almond: "almond",
+            Bronze: "bronze",
+            "Cinnamon Toast": "cinnamon-toast",
+            Sandstone: "sandstone",
+            Terratone: "terratone",
+        },
+        // Base image = left; -right = right-hand outswing
+        swingSuffix: (_colorSlug: string, swing: string) =>
+            swing === "right" ? "right" : "",
+        handleToSlug: {
+            "Modern Matte Black": "modern-matte-black",
+            "Modern Brushed Dark Nickel": "modern-brushed-dark-nickel",
+            "Modern Brushed French Gold": "modern-brushed-french-gold",
+            "Modern Metallic Stone": "modern-metallic-stone",
+            "Modern Venetian Bronze": "modern-venetian-bronze",
+            "Traditional": "traditional",
+            "Traditional Brass": "traditional-brass",
+            "Traditional Antique Brass": "traditional-antique-brass",
+            "Traditional Matte Black": "traditional-matte-black",
+            "Traditional Oil Rubbed Bronze": "traditional-oil-rubbed-bronze",
+        },
+    },
     "andersen-400-series-retractable": {
         folder: "andersen-400-series-3:4",
         ext: ".png",
@@ -231,6 +265,14 @@ export function getProductImage(
 
         if (colorSlug) {
             const ext = subfolder.ext ?? ".avif";
+            const handleSlug =
+                handleName && subfolder.handleToSlug
+                    ? subfolder.handleToSlug[handleName] ?? toSlug(handleName)
+                    : null;
+
+            if (swing && subfolder.handleToSlug && handleSlug) {
+                return `${baseUrl}/${colorSlug}-${swing}-${handleSlug}${ext}`;
+            }
             if (swing && subfolder.swingSuffix) {
                 const suffix = subfolder.swingSuffix(colorSlug, swing);
                 if (suffix) {
@@ -300,6 +342,37 @@ export function getProductImageVariants(
     }
 
     return images;
+}
+
+/**
+ * Products that have handle thumbnail images in a handle/ subfolder
+ */
+const HANDLE_IMAGE_FOLDERS: Record<string, Record<string, string>> = {
+    "andersen-4000-interchangeable": {
+        "Modern Matte Black": "Modern-Matte-Black.webp",
+        "Modern Brushed Dark Nickel": "Modern-Brushed-Dark-Nickel.webp",
+        "Modern Brushed French Gold": "Modern-Brushed-French-Gold.webp",
+        "Modern Metallic Stone": "Modern-Metallic-Stone-Modern-Metallic-Stone.webp",
+        "Modern Venetian Bronze": "Modern-Venetian-Bronze.webp",
+        "Traditional": "traditional.webp",
+        "Traditional Brass": "traditional brass.webp",
+        "Traditional Antique Brass": "traditional-Antique-Brass.webp",
+        "Traditional Matte Black": "Traditional-Matte-Black.webp",
+        "Traditional Oil Rubbed Bronze": "Traditional Oil Rubbed Bronze.webp",
+    },
+};
+
+/**
+ * Gets the handle thumbnail image path for display beside the handle selector
+ */
+export function getHandleImagePath(productId: string, handleName: string): string | null {
+    const map = HANDLE_IMAGE_FOLDERS[productId];
+    if (!map || !handleName) return null;
+    const filename = map[handleName];
+    if (!filename) return null;
+    const subfolder = PRODUCT_IMAGE_SUBFOLDERS[productId];
+    const folder = subfolder?.folder ?? productId;
+    return `/products/${folder}/handle/${encodeURIComponent(filename)}`;
 }
 
 /**

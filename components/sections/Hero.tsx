@@ -14,13 +14,13 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 gradient-hero" />
-      
+
       {/* Decorative elements */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-gold/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
-      
+
       {/* Subtle pattern overlay */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -42,15 +42,14 @@ export default function Hero() {
 
         {/* Main heading */}
         <h1
-          className={`text-5xl md:text-7xl lg:text-8xl font-bold text-primary mb-6 leading-[1.1] tracking-tight ${
+          className={`text-5xl md:text-8xl font-bold text-primary mb-6 md:px-20 leading-[1.1] tracking-tight ${
             mounted ? "animate-fade-in-up delay-100" : "opacity-0"
           }`}
           style={{ fontFamily: "var(--font-serif)" }}
         >
-          Storm Doors,
-          <br />
+          The No. 1 place to find your{" "}
           <span className="text-shimmer text-shimmer-animate">
-            Reimagined.
+            perfect storm door.
           </span>
         </h1>
 
@@ -67,8 +66,9 @@ export default function Hero() {
             mounted ? "animate-fade-in-up delay-300" : "opacity-0"
           }`}
         >
-          Where historic elegance meets modern protection. Handcrafted doors 
-          that transform your entryway into a statement of refined taste.
+          PoraDoor is the only platform that guides you confidently to the right
+          storm door, combining education, a curated catalog, and optional
+          professional installation all in one place.
         </p>
 
         {/* CTA buttons */}

@@ -2,33 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import classicVictorian from "@/public/home/image1.png";
 import door1 from "@/public/products/door1.png";
+import { products as allProducts } from "@/app/shop/data/products";
+import { getProductImage } from "@/app/shop/utils/imageManager";
 import { useEffect, useRef, useState } from "react";
 
-const products = [
-  {
-    name: "Classic Victorian",
-    description:
-      "Ornate scrollwork and elegant glass panels that capture the grandeur of Victorian architecture.",
-    price: "From $899",
-    tag: "Best Seller",
-  },
-  {
-    name: "Modern Minimalist",
-    description:
-      "Clean lines and expansive glass for contemporary homes that value simplicity and light.",
-    price: "From $799",
-    tag: "New",
-  },
-  {
-    name: "Craftsman Heritage",
-    description:
-      "Authentic Arts & Crafts details with warm wood tones and geometric patterns.",
-    price: "From $949",
-    tag: "Premium",
-  },
-];
+const featuredProducts = allProducts.slice(0, 3);
 
 export default function Products() {
   const [isVisible, setIsVisible] = useState(false);
@@ -41,7 +20,7 @@ export default function Products() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -101,80 +80,90 @@ export default function Products() {
 
         {/* Products grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {products.map((product, index) => (
-            <div
-              key={index}
-              className={`group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 ${
-                isVisible ? "animate-fade-in-up" : "opacity-0"
-              }`}
-              style={{ animationDelay: `${300 + index * 100}ms` }}
-            >
-              {/* Image container */}
-              <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-[#e8e4dc] to-[#d4cfc5]">
-                <Image
-                  src={door1}
-                  alt={product.name}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+          {featuredProducts.map((product, index) => {
+            const imagePath = getProductImage(product.id, product.colors?.[0]);
+            return (
+              <div
+                key={product.id}
+                className={`group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 ${
+                  isVisible ? "animate-fade-in-up" : "opacity-0"
+                }`}
+                style={{ animationDelay: `${300 + index * 100}ms` }}
+              >
+                {/* Image container */}
+                <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-[#e8e4dc] to-[#d4cfc5]">
+                  <Image
+                    src={imagePath}
+                    alt={product.name}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = door1.src;
+                    }}
+                  />
 
-                {/* Tag */}
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-primary text-xs font-semibold tracking-wide rounded-full">
-                    {product.tag}
-                  </span>
-                </div>
+                  {/* Tag */}
+                  <div className="absolute top-4 left-4">
+                    <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-primary text-xs font-semibold tracking-wide rounded-full">
+                      {product.tag}
+                    </span>
+                  </div>
 
-                {/* Quick view overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-8">
-                  <button className="px-6 py-3 bg-white text-primary font-medium rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    Quick View
-                  </button>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6 md:p-8">
-                <div className="flex items-start justify-between mb-3">
-                  <h3
-                    className="text-xl md:text-2xl font-semibold text-primary"
-                    style={{ fontFamily: "var(--font-serif)" }}
-                  >
-                    {product.name}
-                  </h3>
-                </div>
-
-                <p className="text-secondary text-sm leading-relaxed mb-4">
-                  {product.description}
-                </p>
-
-                <div className="flex items-center justify-between pt-4 border-t border-divider">
-                  <span className="text-gold font-semibold text-lg">
-                    {product.price}
-                  </span>
+                  {/* Quick view overlay */}
                   <Link
-                    href="#products"
-                    className="flex items-center gap-2 text-primary hover:text-gold transition-colors text-sm font-medium"
+                    href={`/shop/${product.id}`}
+                    className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-8"
                   >
-                    Details
-                    <svg
-                      className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
+                    <span className="px-6 py-3 bg-white text-primary font-medium rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      Quick View
+                    </span>
                   </Link>
                 </div>
+
+                {/* Content */}
+                <div className="p-6 md:p-8">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3
+                      className="text-xl md:text-2xl font-semibold text-primary"
+                      style={{ fontFamily: "var(--font-serif)" }}
+                    >
+                      {product.name}
+                    </h3>
+                  </div>
+
+                  <p className="text-secondary text-sm leading-relaxed mb-4">
+                    {product.description}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-divider">
+                    <span className="text-gold font-semibold text-lg">
+                      {product.price}
+                    </span>
+                    <Link
+                      href={`/shop/${product.id}`}
+                      className="flex items-center gap-2 text-primary hover:text-gold transition-colors text-sm font-medium"
+                    >
+                      Details
+                      <svg
+                        className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* View all button */}

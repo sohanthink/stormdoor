@@ -16,7 +16,7 @@ const footerLinks = {
     { label: "Press", href: "#" },
   ],
   support: [
-    { label: "Contact", href: "#contact" },
+    { label: "Contact", href: "/contact" },
     { label: "FAQ", href: "#" },
     { label: "Installation Guide", href: "#" },
     { label: "Warranty", href: "#" },

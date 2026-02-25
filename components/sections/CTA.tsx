@@ -14,7 +14,7 @@ export default function CTA() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -30,7 +30,8 @@ export default function CTA() {
       id="contact"
       className="section-padding relative overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #1a1814 0%, #2a2620 50%, #3d3529 100%)",
+        background:
+          "linear-gradient(135deg, #1a1814 0%, #2a2620 50%, #3d3529 100%)",
       }}
     >
       {/* Decorative elements */}
@@ -87,9 +88,9 @@ export default function CTA() {
             }`}
             style={{ color: "rgba(250, 248, 245, 0.8)" }}
           >
-            Schedule a free consultation with our design experts. We&apos;ll help you
-            find the perfect door that complements your home&apos;s architecture and
-            reflects your personal style.
+            Schedule a free consultation with our design experts. We&apos;ll
+            help you find the perfect door that complements your home&apos;s
+            architecture and reflects your personal style.
           </p>
 
           {/* CTA buttons */}
@@ -99,7 +100,7 @@ export default function CTA() {
             }`}
           >
             <Link
-              href="#contact"
+              href="/contact"
               className="px-10 py-4 bg-gold text-white rounded-full font-medium text-lg hover:bg-gold-light transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5"
             >
               Get Free Quote
@@ -108,8 +109,18 @@ export default function CTA() {
               href="tel:+18001234567"
               className="px-10 py-4 border-2 border-gold/40 text-gold rounded-full font-medium text-lg hover:bg-gold/10 transition-all duration-300 flex items-center justify-center gap-2"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                />
               </svg>
               Call Us Now
             </Link>
@@ -121,21 +132,60 @@ export default function CTA() {
               isVisible ? "animate-fade-in-up delay-500" : "opacity-0"
             }`}
           >
-            <div className="flex items-center gap-2" style={{ color: "rgba(250, 248, 245, 0.6)" }}>
-              <svg className="w-5 h-5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            <div
+              className="flex items-center gap-2"
+              style={{ color: "rgba(250, 248, 245, 0.6)" }}
+            >
+              <svg
+                className="w-5 h-5 text-gold"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                />
               </svg>
               <span className="text-sm">Lifetime Warranty</span>
             </div>
-            <div className="flex items-center gap-2" style={{ color: "rgba(250, 248, 245, 0.6)" }}>
-              <svg className="w-5 h-5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div
+              className="flex items-center gap-2"
+              style={{ color: "rgba(250, 248, 245, 0.6)" }}
+            >
+              <svg
+                className="w-5 h-5 text-gold"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
               <span className="text-sm">Same-Week Installation</span>
             </div>
-            <div className="flex items-center gap-2" style={{ color: "rgba(250, 248, 245, 0.6)" }}>
-              <svg className="w-5 h-5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            <div
+              className="flex items-center gap-2"
+              style={{ color: "rgba(250, 248, 245, 0.6)" }}
+            >
+              <svg
+                className="w-5 h-5 text-gold"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                />
               </svg>
               <span className="text-sm">Flexible Financing</span>
             </div>

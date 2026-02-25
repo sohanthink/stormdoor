@@ -52,48 +52,76 @@ export const larsonQuickFitHandles: HandleOption[] = [
 ];
 
 export const andersenHandles: HandleOption[] = [
-  // Modern
+  // Modern (based on handle image filenames)
   {
-    id: "andersen-modern-black",
-    name: "Andersen Modern - Matte Black",
+    id: "andersen-modern-matte-black",
+    name: "Modern Matte Black",
     style: "Modern",
     finish: "Matte Black",
     price: 119,
   },
   {
-    id: "andersen-modern-bronze",
-    name: "Andersen Modern - Venetian Bronze",
-    style: "Modern",
-    finish: "Venetian Bronze",
-    price: 119,
-  },
-  {
-    id: "andersen-modern-nickel",
-    name: "Andersen Modern - Brushed Dark Nickel",
+    id: "andersen-modern-brushed-dark-nickel",
+    name: "Modern Brushed Dark Nickel",
     style: "Modern",
     finish: "Brushed Dark Nickel",
     price: 119,
   },
+  {
+    id: "andersen-modern-brushed-french-gold",
+    name: "Modern Brushed French Gold",
+    style: "Modern",
+    finish: "Brushed French Gold",
+    price: 119,
+  },
+  {
+    id: "andersen-modern-metallic-stone",
+    name: "Modern Metallic Stone",
+    style: "Modern",
+    finish: "Metallic Stone",
+    price: 119,
+  },
+  {
+    id: "andersen-modern-venetian-bronze",
+    name: "Modern Venetian Bronze",
+    style: "Modern",
+    finish: "Venetian Bronze",
+    price: 119,
+  },
   // Traditional
   {
-    id: "andersen-traditional-nickel",
-    name: "Andersen Traditional - Nickel",
+    id: "andersen-traditional",
+    name: "Traditional",
     style: "Traditional",
-    finish: "Nickel",
+    finish: "Standard",
     price: 119,
   },
   {
     id: "andersen-traditional-brass",
-    name: "Andersen Traditional - Antique Brass",
+    name: "Traditional Brass",
+    style: "Traditional",
+    finish: "Brass",
+    price: 119,
+  },
+  {
+    id: "andersen-traditional-antique-brass",
+    name: "Traditional Antique Brass",
     style: "Traditional",
     finish: "Antique Brass",
     price: 119,
   },
   {
-    id: "andersen-traditional-bronze",
-    name: "Andersen Traditional - Oil-Rubbed Bronze",
+    id: "andersen-traditional-matte-black",
+    name: "Traditional Matte Black",
     style: "Traditional",
-    finish: "Oil-Rubbed Bronze",
+    finish: "Matte Black",
+    price: 119,
+  },
+  {
+    id: "andersen-traditional-oil-rubbed-bronze",
+    name: "Traditional Oil Rubbed Bronze",
+    style: "Traditional",
+    finish: "Oil Rubbed Bronze",
     price: 119,
   },
 ];
