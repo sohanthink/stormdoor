@@ -22,6 +22,7 @@ export default function Header() {
     { href: "#products", label: "Products" },
     { href: "#features", label: "Features" },
     { href: "#about", label: "About" },
+    { href: "/basics", label: "Basics" },
     { href: "/shop", label: "Shop" },
     { href: "/contact", label: "Contact" },
     { href: "/signin", label: "Login" },

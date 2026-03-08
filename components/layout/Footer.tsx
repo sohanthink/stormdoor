@@ -17,6 +17,7 @@ const footerLinks = {
   ],
   support: [
     { label: "Contact", href: "/contact" },
+    { label: "Storm Door Basics", href: "/basics" },
     { label: "FAQ", href: "#" },
     { label: "Installation Guide", href: "#" },
     { label: "Warranty", href: "#" },
