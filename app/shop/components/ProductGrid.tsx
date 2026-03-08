@@ -1,36 +1,46 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProductCard, { Product } from "./ProductCard";
 import { Category } from "./CategoryFilters";
+
+export type PriceSort = "" | "price-asc" | "price-desc";
 
 interface ProductGridProps {
   products: Product[];
   selectedCategory: Category;
+  priceSort?: PriceSort;
+}
+
+function getProductPrice(p: Product): number {
+  return p.poraDoorPrice ?? p.priceRange?.min ?? 0;
 }
 
 export default function ProductGrid({
   products,
   selectedCategory,
+  priceSort = "",
 }: ProductGridProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const [filteredProducts, setFilteredProducts] = useState(products);
+
+  const filteredAndSortedProducts = useMemo(() => {
+    let list =
+      selectedCategory === "all"
+        ? [...products]
+        : products.filter((p) => p.category === selectedCategory);
+    if (priceSort === "price-asc") {
+      list = [...list].sort((a, b) => getProductPrice(a) - getProductPrice(b));
+    } else if (priceSort === "price-desc") {
+      list = [...list].sort((a, b) => getProductPrice(b) - getProductPrice(a));
+    }
+    return list;
+  }, [products, selectedCategory, priceSort]);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  useEffect(() => {
-    if (selectedCategory === "all") {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(
-        products.filter((product) => product.category === selectedCategory)
-      );
-    }
-  }, [selectedCategory, products]);
-
-  if (filteredProducts.length === 0) {
+  if (filteredAndSortedProducts.length === 0) {
     return (
       <div className="text-center py-20">
         <div className="max-w-md mx-auto">
@@ -64,7 +74,7 @@ export default function ProductGrid({
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-      {filteredProducts.map((product, index) => (
+      {filteredAndSortedProducts.map((product, index) => (
         <ProductCard
           key={product.id}
           product={product}
